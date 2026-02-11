@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja do Rio - Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f0f0f; color: white; }
+        .card { background-color: #1e1e1e; border-radius: 12px; transition: 0.3s; }
+        .card:hover { transform: scale(1.02); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="p-4 border-b border-gray-800 flex justify-between items-center bg-[#1e1e1e]">
+        <h1 class="font-bold text-xl tracking-tighter">LOJA DO RIO</h1>
+        <div id="auth-section">
+            <button id="btn-login" class="bg-white text-black px-6 py-2 rounded-lg font-bold">Entrar com Google</button>
+            <div id="user-info" class="hidden items-center gap-3">
+                <span id="user-name" class="text-sm font-medium"></span>
+                <button id="btn-logout" class="text-red-500 text-xs underline">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="admin-panel" class="p-6 hidden">
+        <div class="max-w-xl mx-auto bg-[#1e1e1e] p-6 rounded-xl border border-gray-700">
+            <h2 class="text-xl font-bold mb-4">Adicionar Novo Produto</h2>
+            <div class="space-y-4">
+                <input type="text" id="prod-name" placeholder="Nome do Veículo/Item" class="w-full p-3 bg-black border border-gray-700 rounded text-white">
+                <input type="number" id="prod-price" placeholder="Preço (R$)" class="w-full p-3 bg-black border border-gray-700 rounded text-white">
+                <input type="text" id="prod-img" placeholder="URL da Imagem (Ex: Discord ou Imgur)" class="w-full p-3 bg-black border border-gray-700 rounded text-white">
+                <button id="btn-save" class="w-full bg-green-600 py-3 rounded-lg font-bold hover:bg-green-700">Salvar no Estoque</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="p-8">
+        <h2 class="text-2xl font-bold mb-6">Produtos Disponíveis</h2>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // CONFIGURAÇÃO DO SEU FIREBASE (Pegue no Console do Firebase)
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_PROJETO.firebaseapp.com",
+            projectId: "SEU_PROJETO_ID",
+            storageBucket: "SEU_PROJETO.appspot.com",
+            messagingSenderId: "SEU_ID",
+            appId: "SEU_APP_ID"
+        };
+
+        const DONO_EMAIL = "seu-email-dono@gmail.com"; // COLOQUE SEU EMAIL AQUI
+
+        // Inicializar
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        // Elementos da Tela
+        const btnLogin = document.getElementById('btn-login');
+        const btnLogout = document.getElementById('btn-logout');
+        const adminPanel = document.getElementById('admin-panel');
+        const productsGrid = document.getElementById('products-grid');
+
+        // LOGIN / LOGOUT
+        btnLogin.onclick = () => signInWithPopup(auth, provider);
+        btnLogout.onclick = () => signOut(auth);
+
+        // MONITORAR LOGIN
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                btnLogin.classList.add('hidden');
+                document.getElementById('user-info').classList.remove('hidden');
+                document.getElementById('user-name').innerText = user.displayName;
+                
+                // Só mostra o painel se o e-mail for o seu
+                if (user.email === DONO_EMAIL) {
+                    adminPanel.classList.remove('hidden');
+                }
+            } else {
+                btnLogin.classList.remove('hidden');
+                document.getElementById('user-info').classList.add('hidden');
+                adminPanel.classList.add('hidden');
+            }
+        });
+
+        // ADICIONAR PRODUTO NO BANCO
+        document.getElementById('btn-save').onclick = async () => {
+            const name = document.getElementById('prod-name').value;
+            const price = document.getElementById('prod-price').value;
+            const img = document.getElementById('prod-img').value;
+
+            if(name && price && img) {
+                await addDoc(collection(db, "produtos"), {
+                    nome: name,
+                    preco: price,
+                    imagem: img,
+                    data: Date.now()
+                });
+                alert("Produto salvo!");
+            }
+        };
+
+        // LISTAR PRODUTOS EM TEMPO REAL
+        const q = query(collection(db, "produtos"), orderBy("data", "desc"));
+        onSnapshot(q, (snapshot) => {
+            productsGrid.innerHTML = "";
+            snapshot.forEach((doc) => {
+                const p = doc.data();
+                productsGrid.innerHTML += `
+                    <div class="card p-0 overflow-hidden">
+                        <img src="${p.imagem}" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h3 class="font-bold">${p.nome}</h3>
+                            <p class="text-gray-500 text-xs">Entrega Automática</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <div>
+                                    <span class="block text-[10px] text-gray-400">À vista no PIX</span>
+                                    <span class="font-bold text-lg">R$ ${p.preco}</span>
+                                </div>
+                                <button class="bg-white text-black px-3 py-2 rounded font-bold text-sm">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
