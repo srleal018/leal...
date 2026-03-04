@@ -3,142 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Curso Fullstack</title>
+    <title>Curso Fullstack: 50 Aulas</title>
     <style>
-        /* Estilo Minimalista GitHub */
-        :root {
-            --color-bg: #f6f8fa;
-            --color-white: #ffffff;
-            --color-border: #d0d7de;
-            --color-btn: #2da44e;
-            --color-text: #24292f;
-            --color-link: #0969da;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh;
-        }
-
-        .auth-container {
-            width: 320px; background: var(--color-white); border: 1px solid var(--color-border);
-            padding: 24px; border-radius: 6px; box-shadow: 0 8px 24px rgba(140,149,159,0.2);
-        }
-
-        h2 { font-size: 24px; font-weight: 300; text-align: center; margin-bottom: 20px; }
-        
-        label { font-size: 14px; font-weight: 600; display: block; margin-bottom: 8px; }
-        
-        input {
-            width: 100%; padding: 5px 12px; margin-bottom: 16px; border: 1px solid var(--color-border);
-            border-radius: 6px; box-sizing: border-box; font-size: 14px; outline: none;
-        }
-
-        input:focus { border-color: var(--color-link); box-shadow: 0 0 0 3px rgba(9,105,218,0.3); }
-
-        button {
-            width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(27,31,36,0.15);
-            font-weight: 600; cursor: pointer; color: white; background-color: var(--color-btn);
-        }
-
-        .btn-secondary { background: none; color: var(--color-link); border: none; font-size: 12px; margin-top: 10px; }
-
-        /* Esconder o curso até logar */
-        #course-content { display: none; width: 100%; max-width: 800px; padding: 40px 20px; background: white; min-height: 100vh; }
-        
-        .lesson { border: 1px solid var(--color-border); border-radius: 6px; margin-bottom: 10px; padding: 15px; }
-        header { border-bottom: 1px solid var(--color-border); padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; }
+        :root { --border: #d0d7de; --bg: #f6f8fa; --text: #24292f; --accent: #0969da; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; }
+        h1 { border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .lesson-card { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; padding: 12px; background: white; display: flex; align-items: center; }
+        .lesson-card input { margin-right: 15px; transform: scale(1.2); }
+        .lesson-title { font-weight: 600; cursor: pointer; flex-grow: 1; }
+        .lesson-content { display: none; padding: 15px; border-top: 1px solid var(--border); background: var(--bg); font-size: 14px; }
+        pre { background: #282c34; color: #abb2bf; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .open { display: block; }
     </style>
 </head>
 <body>
 
-    <div id="auth-ui" class="auth-container">
-        <h2>Entrar no Curso</h2>
-        <div id="login-form">
-            <label>Endereço de e-mail</label>
-            <input type="email" id="email" required>
-            
-            <label>Senha</label>
-            <input type="password" id="password" required>
-            
-            <button id="btn-login">Entrar</button>
-            <button class="btn-secondary" id="go-to-signup">Não tem conta? Crie uma aqui.</button>
-        </div>
-        <p id="msg" style="color: #cf222e; font-size: 12px; text-align: center; margin-top: 10px;"></p>
-    </div>
+    <h1>🚀 Trilha: 50 Aulas (Python + Web)</h1>
+    <p>Marque as aulas conforme for concluindo. Seu progresso é salvo automaticamente!</p>
+    
+    <div id="lesson-container"></div>
 
-    <div id="course-content">
-        <header>
-            <strong>Python & HTML</strong>
-            <a href="#" onclick="logout()" style="color: var(--color-link); font-size: 13px;">Sair</a>
-        </header>
-        <h1>Minha Jornada: 50 Aulas</h1>
-        <div id="list-aulas"></div>
-    </div>
+    <script>
+        // Lista das aulas
+        const aulas = [
+            "O que é HTML?", "Setup VS Code", "Estrutura Boilerplate", "Headings (h1-h6)", "Parágrafos", 
+            "Formatação de Texto", "Links e Âncoras", "Imagens e Alt", "Listas UL/OL", "Tabelas Básicas", 
+            "Divs e Spans", "ID vs Class", "Formulários", "Inputs e Labels", "Botões de Submissão",
+            "Intro CSS", "Cores e Backgrounds", "Box Model", "Margem e Padding", "Bordas", 
+            "Google Fonts", "Flexbox Row", "Flexbox Col", "Responsividade", "Hover Effects",
+            "Setup Python", "Variáveis", "Inteiros e Floats", "Strings", "Listas", 
+            "Dicionários", "Input", "Operadores Lógicos", "IF e ELSE", "Loop FOR", 
+            "Loop WHILE", "Funções def", "Parâmetros", "Retorno de Dados", "Importando Módulos",
+            "Tratamento de Erros", "Classes e Objetos", "Métodos", "Decorators", "Ambientes Virtuais", 
+            "Pip e Instalação", "Flask: App Básico", "Flask: Rotas", "Flask: Templates", "Projeto Final"
+        ];
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        const container = document.getElementById('lesson-container');
 
-        // CONFIGURAÇÃO QUE VOCÊ ENVIOU
-        const firebaseConfig = {
-            apiKey: "AIzaSyC08uBaH3okS0pdOkMM9wWS2c_sTt6_UTU",
-            authDomain: "bloco-de-notas-85103.firebaseapp.com",
-            projectId: "bloco-de-notas-85103",
-            storageBucket: "bloco-de-notas-85103.firebasestorage.app",
-            messagingSenderId: "890697512853",
-            appId: "1:890697512853:web:7bff196880f1b010d5289c",
-            measurementId: "G-SKDH1JR99T"
-        };
+        aulas.forEach((titulo, i) => {
+            const id = `aula-${i}`;
+            const isChecked = localStorage.getItem(id) === 'true';
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        const authUI = document.getElementById('auth-ui');
-        const courseUI = document.getElementById('course-content');
-        const msg = document.getElementById('msg');
-
-        // MONITOR DE LOGIN
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.body.style.alignItems = "flex-start"; // Ajusta layout para o curso
-                authUI.style.display = "none";
-                courseUI.style.display = "block";
-                gerarAulas();
-            } else {
-                document.body.style.alignItems = "center";
-                authUI.style.display = "block";
-                courseUI.style.display = "none";
-            }
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <div class="lesson-card">
+                    <input type="checkbox" id="check-${i}" ${isChecked ? 'checked' : ''} onchange="toggleCheck('${id}')">
+                    <span class="lesson-title" onclick="toggleContent('content-${i}')">Aula ${i + 1}: ${titulo}</span>
+                </div>
+                <div id="content-${i}" class="lesson-content">
+                    <p>Conteúdo de estudo para: <strong>${titulo}</strong></p>
+                    <pre><code># Exemplo de código da aula ${i + 1}\nprint("Estudando ${titulo}")</code></pre>
+                </div>
+            `;
+            container.appendChild(div);
         });
 
-        // BOTÃO LOGIN
-        document.getElementById('btn-login').onclick = () => {
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('password').value;
-            signInWithEmailAndPassword(auth, e, p).catch(err => msg.innerText = "Falha no login.");
-        };
+        // Funções de controle
+        function toggleContent(id) {
+            document.getElementById(id).classList.toggle('open');
+        }
 
-        // BOTÃO SIGNUP (CRIA CONTA SE NÃO EXISTIR)
-        document.getElementById('go-to-signup').onclick = () => {
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('password').value;
-            if(!e || !p) return msg.innerText = "Preencha e-mail e senha!";
-            createUserWithEmailAndPassword(auth, e, p).then(() => msg.innerText = "Conta criada!")
-            .catch(err => msg.innerText = "Erro ao criar conta.");
-        };
-
-        window.logout = () => signOut(auth);
-
-        // AS 50 AULAS
-        function gerarAulas() {
-            const box = document.getElementById('list-aulas');
-            if(box.children.length > 0) return;
-            for(let i=1; i<=50; i++) {
-                box.innerHTML += `<div class="lesson"><b>Aula ${i}:</b> Conteúdo da aula detalhado aqui.</div>`;
-            }
+        function toggleCheck(id) {
+            const checked = document.getElementById(`check-${id.split('-')[1]}`).checked;
+            localStorage.setItem(id, checked);
         }
     </script>
 </body>
