@@ -3,96 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Curso - Python & HTML</title>
+    <title>Login | Curso Fullstack</title>
     <style>
-        /* Estilo GitHub Clean */
+        /* Estilo Minimalista GitHub */
         :root {
-            --color-fg-default: #24292f;
-            --color-bg-default: #ffffff;
-            --color-border-default: #d0d7de;
-            --color-accent-fg: #0969da;
-            --color-btn-primary-bg: #2da44e;
-            --color-btn-primary-hover: #2c974b;
-            --color-canvas-subtle: #f6f8fa;
+            --color-bg: #f6f8fa;
+            --color-white: #ffffff;
+            --color-border: #d0d7de;
+            --color-btn: #2da44e;
+            --color-text: #24292f;
+            --color-link: #0969da;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            color: var(--color-fg-default);
-            background-color: var(--color-bg-default);
-            margin: 0; padding: 0; display: flex; justify-content: center;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh;
         }
 
-        .container { width: 100%; max-width: 800px; margin: 40px 20px; }
-
-        /* Telas */
-        #auth-screen, #course-screen { display: none; }
-
-        /* Form Estilo GitHub */
-        .auth-box {
-            border: 1px solid var(--color-border-default);
-            border-radius: 6px; padding: 32px; background: var(--color-canvas-subtle);
-            max-width: 400px; margin: 100px auto;
+        .auth-container {
+            width: 320px; background: var(--color-white); border: 1px solid var(--color-border);
+            padding: 24px; border-radius: 6px; box-shadow: 0 8px 24px rgba(140,149,159,0.2);
         }
 
+        h2 { font-size: 24px; font-weight: 300; text-align: center; margin-bottom: 20px; }
+        
+        label { font-size: 14px; font-weight: 600; display: block; margin-bottom: 8px; }
+        
         input {
-            width: 100%; padding: 8px 12px; margin: 8px 0 16px;
-            border: 1px solid var(--color-border-default); border-radius: 6px;
-            box-sizing: border-box; font-size: 14px;
+            width: 100%; padding: 5px 12px; margin-bottom: 16px; border: 1px solid var(--color-border);
+            border-radius: 6px; box-sizing: border-box; font-size: 14px; outline: none;
         }
+
+        input:focus { border-color: var(--color-link); box-shadow: 0 0 0 3px rgba(9,105,218,0.3); }
 
         button {
             width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(27,31,36,0.15);
-            font-weight: 600; cursor: pointer; margin-bottom: 10px;
+            font-weight: 600; cursor: pointer; color: white; background-color: var(--color-btn);
         }
 
-        .btn-primary { background: var(--color-btn-primary-bg); color: white; }
-        .btn-primary:hover { background: var(--color-btn-primary-hover); }
-        
-        .btn-outline { background: white; color: var(--color-accent-fg); border-color: var(--color-border-default); }
+        .btn-secondary { background: none; color: var(--color-link); border: none; font-size: 12px; margin-top: 10px; }
 
-        /* Estilo das Aulas */
-        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border-default); padding-bottom: 10px; margin-bottom: 20px; }
-        details { border: 1px solid var(--color-border-default); border-radius: 6px; margin-bottom: 8px; background: white; }
-        summary { padding: 12px; cursor: pointer; font-weight: 600; background: var(--color-canvas-subtle); list-style: none; }
-        .lesson-body { padding: 15px; border-top: 1px solid var(--color-border-default); font-size: 14px; }
-        pre { background: #1b1f23; color: #e1e4e8; padding: 16px; border-radius: 6px; overflow: auto; }
+        /* Esconder o curso até logar */
+        #course-content { display: none; width: 100%; max-width: 800px; padding: 40px 20px; background: white; min-height: 100vh; }
+        
+        .lesson { border: 1px solid var(--color-border); border-radius: 6px; margin-bottom: 10px; padding: 15px; }
+        header { border-bottom: 1px solid var(--color-border); padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div id="auth-screen">
-            <div class="auth-box">
-                <h2 style="text-align:center;">Entrar no Curso</h2>
-                <label>E-mail</label>
-                <input type="email" id="email" placeholder="seu@email.com">
-                <label>Senha</label>
-                <input type="password" id="password" placeholder="******">
-                <button class="btn-primary" id="btn-login">Entrar</button>
-                <button class="btn-outline" id="btn-signup">Criar nova conta</button>
-                <p id="auth-error" style="color:red; font-size: 12px; text-align: center;"></p>
-            </div>
+    <div id="auth-ui" class="auth-container">
+        <h2>Entrar no Curso</h2>
+        <div id="login-form">
+            <label>Endereço de e-mail</label>
+            <input type="email" id="email" required>
+            
+            <label>Senha</label>
+            <input type="password" id="password" required>
+            
+            <button id="btn-login">Entrar</button>
+            <button class="btn-secondary" id="go-to-signup">Não tem conta? Crie uma aqui.</button>
         </div>
+        <p id="msg" style="color: #cf222e; font-size: 12px; text-align: center; margin-top: 10px;"></p>
+    </div>
 
-        <div id="course-screen">
-            <header>
-                <div>
-                    <strong>Curso Fullstack</strong> / <span id="user-display">carregando...</span>
-                </div>
-                <button onclick="logout()" style="width: auto; padding: 5px 10px; font-size: 12px;">Sair</button>
-            </header>
-
-            <h1>🚀 Sua Jornada: 50 Aulas</h1>
-            <div id="lesson-list"></div>
-        </div>
+    <div id="course-content">
+        <header>
+            <strong>Python & HTML</strong>
+            <a href="#" onclick="logout()" style="color: var(--color-link); font-size: 13px;">Sair</a>
+        </header>
+        <h1>Minha Jornada: 50 Aulas</h1>
+        <div id="list-aulas"></div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Sua Configuração fornecida
+        // CONFIGURAÇÃO QUE VOCÊ ENVIOU
         const firebaseConfig = {
             apiKey: "AIzaSyC08uBaH3okS0pdOkMM9wWS2c_sTt6_UTU",
             authDomain: "bloco-de-notas-85103.firebaseapp.com",
@@ -106,73 +96,49 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // --- CONTROLE DE INTERFACE ---
-        const authScreen = document.getElementById('auth-screen');
-        const courseScreen = document.getElementById('course-screen');
-        const errorMsg = document.getElementById('auth-error');
+        const authUI = document.getElementById('auth-ui');
+        const courseUI = document.getElementById('course-content');
+        const msg = document.getElementById('msg');
 
+        // MONITOR DE LOGIN
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                authScreen.style.display = 'none';
-                courseScreen.style.display = 'block';
-                document.getElementById('user-display').innerText = user.email;
-                renderLessons();
+                document.body.style.alignItems = "flex-start"; // Ajusta layout para o curso
+                authUI.style.display = "none";
+                courseUI.style.display = "block";
+                gerarAulas();
             } else {
-                authScreen.style.display = 'block';
-                courseScreen.style.display = 'none';
+                document.body.style.alignItems = "center";
+                authUI.style.display = "block";
+                courseUI.style.display = "none";
             }
         });
 
-        // --- LOGIN E CADASTRO ---
+        // BOTÃO LOGIN
         document.getElementById('btn-login').onclick = () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            signInWithEmailAndPassword(auth, email, password).catch(e => errorMsg.innerText = "Erro ao entrar: " + e.message);
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, e, p).catch(err => msg.innerText = "Falha no login.");
         };
 
-        document.getElementById('btn-signup').onclick = () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            createUserWithEmailAndPassword(auth, email, password).catch(e => errorMsg.innerText = "Erro ao criar: " + e.message);
+        // BOTÃO SIGNUP (CRIA CONTA SE NÃO EXISTIR)
+        document.getElementById('go-to-signup').onclick = () => {
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('password').value;
+            if(!e || !p) return msg.innerText = "Preencha e-mail e senha!";
+            createUserWithEmailAndPassword(auth, e, p).then(() => msg.innerText = "Conta criada!")
+            .catch(err => msg.innerText = "Erro ao criar conta.");
         };
 
         window.logout = () => signOut(auth);
 
-        // --- RENDERIZAR AS 50 AULAS ---
-        function renderLessons() {
-            const list = document.getElementById('lesson-list');
-            if(list.innerHTML !== "") return; // Evita duplicar ao relogar
-
-            const aulas = [
-                // HTML (1-15)
-                "Intro: O que é Web?", "Setup VS Code", "Primeira Tag", "Títulos H1-H6", "Parágrafos", 
-                "Listas UL/OL", "Links href", "Imagens e Alt", "Atributos Globais", "Tabelas", 
-                "Divs e Spans", "ID vs Class", "Formulários", "Inputs de Texto", "Checkbox e Radio",
-                // CSS (16-25)
-                "Intro CSS", "Cores HEX/RGB", "Box Model", "Padding/Margin", "Bordas", 
-                "Fontes Google", "Flexbox Row", "Flexbox Column", "Responsividade", "Hover Effects",
-                // PYTHON (26-40)
-                "Setup Python", "Variáveis", "Inteiros e Floats", "Strings", "Listas em Python", 
-                "Dicionários", "Input do Usuário", "Operadores Lógicos", "IF e ELSE", "Loop FOR", 
-                "Loop WHILE", "Funções def", "Parâmetros", "Retorno de Dados", "Importando Módulos",
-                // BACKEND (41-50)
-                "O que é Flask?", "Minha primeira rota", "Render Template", "Variáveis no HTML", "Método POST", 
-                "Banco de Dados SQL", "Login com Flask", "API JSON", "Deploy Python", "Conclusão do Curso"
-            ];
-
-            aulas.forEach((aula, i) => {
-                const html = `
-                    <details>
-                        <summary>Aula ${i + 1}: ${aula}</summary>
-                        <div class="lesson-body">
-                            <p>Conteúdo prático sobre <strong>${aula}</strong>.</p>
-                            <p>Exemplo de código para estudo:</p>
-                            <pre><code>${i < 25 ? '\n<div class="aula">Aprenda ' + aula + '</div>' : '# Exemplo Python\ndef aula():\n    print("Estudando ' + aula + '")'}</code></pre>
-                        </div>
-                    </details>
-                `;
-                list.innerHTML += html;
-            });
+        // AS 50 AULAS
+        function gerarAulas() {
+            const box = document.getElementById('list-aulas');
+            if(box.children.length > 0) return;
+            for(let i=1; i<=50; i++) {
+                box.innerHTML += `<div class="lesson"><b>Aula ${i}:</b> Conteúdo da aula detalhado aqui.</div>`;
+            }
         }
     </script>
 </body>
