@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso Completo: Python & HTML</title>
+    <title>Trilha Completa: HTML & Python</title>
     <style>
-        /* Estilos baseados no design system do GitHub */
+        /* CSS Baseado no GitHub */
         :root {
             --color-fg-default: #24292f;
             --color-bg-default: #ffffff;
             --color-border-default: #d0d7de;
-            --color-border-muted: hsla(210,18%,87%,1);
             --color-accent-fg: #0969da;
             --color-btn-primary-bg: #2da44e;
             --color-btn-primary-hover-bg: #2c974b;
             --color-canvas-subtle: #f6f8fa;
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-            --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
         }
 
         body {
@@ -30,205 +29,268 @@
             justify-content: center;
         }
 
-        /* Container principal simulando o README do GitHub */
         .repository-content {
-            max-width: 896px;
+            max-width: 900px;
             width: 100%;
             margin: 40px 20px;
             padding: 32px;
             border: 1px solid var(--color-border-default);
             border-radius: 6px;
-            background-color: var(--color-bg-default);
         }
 
-        h1, h2, h3 {
-            margin-top: 24px;
-            margin-bottom: 16px;
-            font-weight: 600;
-            line-height: 1.25;
-        }
+        h1, h2, h3 { font-weight: 600; margin-top: 24px; margin-bottom: 16px; }
+        h1 { font-size: 2em; border-bottom: 1px solid var(--color-border-default); padding-bottom: 8px; }
+        h2 { font-size: 1.5em; border-bottom: 1px solid var(--color-border-default); padding-bottom: 8px; margin-top: 40px; }
+        
+        a { color: var(--color-accent-fg); text-decoration: none; }
+        a:hover { text-decoration: underline; }
 
-        h1 {
-            font-size: 2em;
-            padding-bottom: 0.3em;
-            border-bottom: 1px solid var(--color-border-muted);
-        }
+        pre { background-color: var(--color-canvas-subtle); border-radius: 6px; padding: 16px; overflow: auto; font-family: var(--font-mono); font-size: 14px; }
+        code { font-family: var(--font-mono); background-color: rgba(175, 184, 193, 0.2); padding: 0.2em 0.4em; border-radius: 6px; font-size: 85%; }
+        pre code { background-color: transparent; padding: 0; }
 
-        h2 {
-            font-size: 1.5em;
-            padding-bottom: 0.3em;
-            border-bottom: 1px solid var(--color-border-muted);
-        }
-
-        p, ul {
-            margin-top: 0;
-            margin-bottom: 16px;
-        }
-
-        ul {
-            padding-left: 2em;
-        }
-
-        li {
-            margin-bottom: 0.25em;
-        }
-
-        a {
-            color: var(--color-accent-fg);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Estilo de blocos de código */
-        pre {
-            background-color: var(--color-canvas-subtle);
+        /* Estilo para Módulos e Aulas (Expandable) */
+        details {
+            margin-bottom: 10px;
+            border: 1px solid var(--color-border-default);
             border-radius: 6px;
-            padding: 16px;
-            overflow: auto;
-            font-family: var(--font-mono);
-            font-size: 85%;
-            line-height: 1.45;
-        }
-
-        code {
-            font-family: var(--font-mono);
-            background-color: rgba(175, 184, 193, 0.2);
-            padding: 0.2em 0.4em;
-            border-radius: 6px;
-            font-size: 85%;
-        }
-
-        pre code {
-            background-color: transparent;
-            padding: 0;
-        }
-
-        /* Citações */
-        blockquote {
-            padding: 0 1em;
-            color: #57606a;
-            border-left: 0.25em solid var(--color-border-default);
-            margin: 0 0 16px 0;
-        }
-
-        /* Botão principal */
-        .btn-primary {
-            display: inline-block;
-            background-color: var(--color-btn-primary-bg);
-            color: #ffffff;
-            font-weight: 500;
-            text-align: center;
-            padding: 9px 20px;
-            border: 1px solid rgba(27, 31, 36, 0.15);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--color-btn-primary-hover-bg);
-            text-decoration: none;
-        }
-
-        .header-repo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            color: #57606a;
+            background: #fff;
         }
         
-        .badge {
-            display: inline-block;
-            padding: 0.12em 0.5em;
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 18px;
-            color: #24292f;
-            background-color: transparent;
-            border: 1px solid var(--color-border-default);
-            border-radius: 2em;
+        summary {
+            font-weight: 600;
+            padding: 12px 16px;
+            cursor: pointer;
+            background-color: var(--color-canvas-subtle);
+            border-radius: 6px;
+            list-style: none; /* Remove seta padrão em alguns navegadores */
+            display: flex;
+            align-items: center;
         }
+        
+        summary::-webkit-details-marker { display: none; }
+        summary::before {
+            content: "▶";
+            font-size: 12px;
+            color: #57606a;
+            margin-right: 10px;
+            transition: transform 0.2s;
+        }
+        details[open] > summary::before { transform: rotate(90deg); }
+        details[open] > summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 1px solid var(--color-border-default); }
+
+        .lesson-content {
+            padding: 20px;
+            background: #fff;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+
+        .nested-details {
+            margin: 10px 0 0 20px;
+            border-left: 3px solid var(--color-border-default);
+            border-radius: 0;
+            border-top: none; border-right: none; border-bottom: none;
+        }
+        .nested-details > summary { background: transparent; padding: 8px 12px; font-weight: normal; }
+        .nested-details[open] > summary { border-bottom: none; font-weight: bold; }
+
+        .btn-primary {
+            display: block; width: fit-content; margin: 30px auto;
+            background-color: var(--color-btn-primary-bg); color: #fff;
+            padding: 10px 24px; border-radius: 6px; text-align: center; font-weight: bold;
+        }
+        .btn-primary:hover { background-color: var(--color-btn-primary-hover-bg); text-decoration: none; }
     </style>
 </head>
 <body>
 
     <div class="repository-content">
-        <div class="header-repo">
-            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" fill="#57606a">
-                <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
-            </svg>
-            <span>curso-programacao / <strong>python-html-completo</strong></span>
-            <span class="badge">Público</span>
-        </div>
+        <h1>📚 Trilha de Aprendizado Completa</h1>
+        <p>Clique nos módulos e aulas abaixo para expandir o conteúdo de estudo.</p>
 
-        <h1>🚀 Curso Completo de Programação: Python & HTML</h1>
-        
-        <p>Bem-vindo ao repositório oficial do curso! Aqui você vai aprender a estruturar páginas web com <strong>HTML5</strong> e criar lógicas de programação robustas e backends poderosos com <strong>Python</strong>.</p>
+        <h2>🌐 Curso 1: HTML5 do Zero</h2>
 
-        <blockquote>
-            <p><strong>Status:</strong> Matrículas Abertas | <strong>Nível:</strong> Iniciante ao Avançado | <strong>Certificado:</strong> Incluso</p>
-        </blockquote>
+        <details>
+            <summary>📁 Módulo 1: Primeiros Passos no HTML</summary>
+            <div class="lesson-content">
+                
+                <details class="nested-details">
+                    <summary>📄 Aula 1: O que é HTML?</summary>
+                    <div class="lesson-content">
+                        <h3>Bem-vindo à web!</h3>
+                        <p>HTML (HyperText Markup Language) não é uma linguagem de programação, mas sim uma <strong>linguagem de marcação</strong>. Ela diz ao navegador como estruturar o conteúdo da página.</p>
+                        <p>Pense no HTML como o "esqueleto" de um site. O CSS será a pele/roupa, e o JavaScript (ou Python no back-end) será o cérebro.</p>
+                    </div>
+                </details>
 
-        <h2>📋 Sobre o Curso</h2>
-        <p>Este curso foi desenhado para quem quer sair do zero e se tornar um desenvolvedor capaz de construir interfaces limpas e sistemas funcionais. Nós combinamos a simplicidade do HTML com a versatilidade do Python.</p>
+                <details class="nested-details">
+                    <summary>📄 Aula 2: Estrutura Básica de uma Página</summary>
+                    <div class="lesson-content">
+                        <h3>O Esqueleto HTML</h3>
+                        <p>Todo arquivo HTML começa com uma estrutura padrão. Veja abaixo:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Minha Primeira Página&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Olá, Mundo!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                        <ul>
+                            <li><code>&lt;!DOCTYPE html&gt;</code>: Avisa que é HTML5.</li>
+                            <li><code>&lt;head&gt;</code>: Configurações invisíveis (título, idioma).</li>
+                            <li><code>&lt;body&gt;</code>: O que o usuário realmente vê na tela.</li>
+                        </ul>
+                    </div>
+                </details>
 
-        <h2>🛠️ O que você vai aprender</h2>
-        
-        <h3>Módulo 1: Fundamentos do HTML5</h3>
-        <ul>
-            <li>Estrutura básica de uma página (<code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code>).</li>
-            <li>Semântica web para SEO e Acessibilidade.</li>
-            <li>Criação de formulários interativos e validações.</li>
-            <li>Links, imagens, tabelas e iframes.</li>
-        </ul>
+            </div>
+        </details>
 
-        <h3>Módulo 2: Dominando o Python</h3>
-        <ul>
-            <li>Sintaxe básica, variáveis e tipos de dados.</li>
-            <li>Estruturas de controle (<code>if/else</code>, <code>for</code>, <code>while</code>).</li>
-            <li>Funções, Listas, Dicionários e Tratamento de Erros.</li>
-            <li>Programação Orientada a Objetos (POO).</li>
-        </ul>
+        <details>
+            <summary>📁 Módulo 2: Textos, Links e Imagens</summary>
+            <div class="lesson-content">
+                
+                <details class="nested-details">
+                    <summary>📄 Aula 3: Títulos e Parágrafos</summary>
+                    <div class="lesson-content">
+                        <p>Usamos <code>&lt;h1&gt;</code> até <code>&lt;h6&gt;</code> para títulos (do maior para o menor importância) e <code>&lt;p&gt;</code> para parágrafos.</p>
+<pre><code>&lt;h2&gt;Notícia Principal&lt;/h2&gt;
+&lt;p&gt;Este é o texto da notícia. O HTML é muito fácil!&lt;/p&gt;</code></pre>
+                    </div>
+                </details>
 
-        <h3>Módulo 3: O Projeto Final</h3>
-        <p>Vamos unir os dois mundos usando um micro-framework web (como Flask ou FastAPI). Veja um exemplo do que construiremos:</p>
+                <details class="nested-details">
+                    <summary>📄 Aula 4: Links e Imagens</summary>
+                    <div class="lesson-content">
+                        <p>Para links, usamos a tag <code>&lt;a&gt;</code>. Para imagens, a tag <code>&lt;img&gt;</code> (que não tem fechamento).</p>
+<pre><code>&lt;!-- Link --&gt;
+&lt;a href="https://github.com"&gt;Acessar o GitHub&lt;/a&gt;
 
+&lt;!-- Imagem --&gt;
+&lt;img src="foto.jpg" alt="Descrição da foto"&gt;</code></pre>
+                    </div>
+                </details>
+
+            </div>
+        </details>
+
+
+        <h2>🐍 Curso 2: Lógica e Python</h2>
+
+        <details>
+            <summary>📁 Módulo 1: Introdução ao Python</summary>
+            <div class="lesson-content">
+                
+                <details class="nested-details">
+                    <summary>📄 Aula 1: Hello World e Variáveis</summary>
+                    <div class="lesson-content">
+                        <h3>Seu primeiro código em Python</h3>
+                        <p>O Python é famoso por ser fácil de ler. Para mostrar algo na tela, usamos a função <code>print()</code>.</p>
+<pre><code>print("Olá, Mundo!")
+
+# Criando variáveis
+nome = "Maria"
+idade = 25
+print(f"Meu nome é {nome} e tenho {idade} anos.")</code></pre>
+                    </div>
+                </details>
+
+                <details class="nested-details">
+                    <summary>📄 Aula 2: Tipos de Dados e Matemática</summary>
+                    <div class="lesson-content">
+                        <p>O Python entende textos (Strings), números inteiros (Int) e decimais (Float).</p>
+<pre><code>preco = 19.99  # Float
+quantidade = 3 # Int
+total = preco * quantidade
+print("Total a pagar:", total)</code></pre>
+                    </div>
+                </details>
+
+            </div>
+        </details>
+
+        <details>
+            <summary>📁 Módulo 2: Estruturas de Controle</summary>
+            <div class="lesson-content">
+                
+                <details class="nested-details">
+                    <summary>📄 Aula 3: Condições (IF / ELSE)</summary>
+                    <div class="lesson-content">
+                        <p>Usamos o <code>if</code> para tomar decisões no código.</p>
+<pre><code>nota = 7.5
+
+if nota >= 7.0:
+    print("Aprovado!")
+elif nota >= 5.0:
+    print("Recuperação.")
+else:
+    print("Reprovado.")</code></pre>
+                    </div>
+                </details>
+
+                <details class="nested-details">
+                    <summary>📄 Aula 4: Laços de Repetição (FOR)</summary>
+                    <div class="lesson-content">
+                        <p>O <code>for</code> serve para repetir uma ação várias vezes.</p>
+<pre><code># Vai contar de 0 até 4
+for numero in range(5):
+    print("Contagem:", numero)</code></pre>
+                    </div>
+                </details>
+
+            </div>
+        </details>
+
+
+        <h2>🚀 Projeto Final: Juntando Tudo</h2>
+
+        <details>
+            <summary>📁 Módulo 1: Criando um Servidor Web</summary>
+            <div class="lesson-content">
+                
+                <details class="nested-details">
+                    <summary>📄 Aula 1: Introdução ao Flask</summary>
+                    <div class="lesson-content">
+                        <p>Agora vamos usar Python para criar um site de verdade usando o micro-framework Flask. Primeiro, instale no terminal: <code>pip install flask</code></p>
+<pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "&lt;h1&gt;Meu site feito em Python!&lt;/h1&gt;"
+
+app.run()</code></pre>
+                    </div>
+                </details>
+
+                <details class="nested-details">
+                    <summary>📄 Aula 2: Entregando seu arquivo HTML</summary>
+                    <div class="lesson-content">
+                        <p>Em vez de escrever HTML dentro do Python, usamos o <code>render_template</code> para carregar aquele arquivo HTML que criamos no Curso 1!</p>
 <pre><code>from flask import Flask, render_template
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    # Renderizando nosso HTML com o poder do Python!
-    return render_template('index.html', titulo="Meu Primeiro App")
+@app.route("/")
+def index():
+    # Isso vai ler o arquivo index.html da pasta 'templates'
+    return render_template("index.html")
 
-if __name__ == '__main__':
-    app.run(debug=True)
-</code></pre>
+app.run()</code></pre>
+                    </div>
+                </details>
 
-        <h2>💻 Pré-requisitos</h2>
-        <ul>
-            <li>Um computador com Windows, macOS ou Linux.</li>
-            <li>Vontade de aprender e resolver problemas.</li>
-            <li>Nenhum conhecimento prévio de programação é exigido!</li>
-        </ul>
-
-        <h2>🎯 Comece Agora</h2>
-        <p>Pronto para escrever suas primeiras linhas de código? Junte-se a centenas de alunos e comece a construir seu portfólio hoje mesmo.</p>
+            </div>
+        </details>
 
         <br>
-        <a href="#inscrever" class="btn-primary">Fazer Matrícula Agora</a>
-        
-        <hr style="margin-top: 40px; margin-bottom: 20px; border: 0; border-top: 1px solid var(--color-border-muted);">
-        <p style="text-align: center; color: #57606a; font-size: 12px;">
-            © 2026 Escola de Programação. Todos os direitos reservados.
-        </p>
+        <a href="#" class="btn-primary" onclick="alert('Parabéns! Você concluiu a leitura da trilha.')">Concluir Curso e Emitir Certificado</a>
+
     </div>
 
 </body>
