@@ -3,295 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trilha Completa: HTML & Python</title>
+    <title>Plataforma de Curso - Python & HTML</title>
     <style>
-        /* CSS Baseado no GitHub */
+        /* Estilo GitHub Clean */
         :root {
             --color-fg-default: #24292f;
             --color-bg-default: #ffffff;
             --color-border-default: #d0d7de;
             --color-accent-fg: #0969da;
             --color-btn-primary-bg: #2da44e;
-            --color-btn-primary-hover-bg: #2c974b;
+            --color-btn-primary-hover: #2c974b;
             --color-canvas-subtle: #f6f8fa;
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
         }
 
         body {
-            font-family: var(--font-stack);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             color: var(--color-fg-default);
             background-color: var(--color-bg-default);
-            line-height: 1.5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
+            margin: 0; padding: 0; display: flex; justify-content: center;
         }
 
-        .repository-content {
-            max-width: 900px;
-            width: 100%;
-            margin: 40px 20px;
-            padding: 32px;
+        .container { width: 100%; max-width: 800px; margin: 40px 20px; }
+
+        /* Telas */
+        #auth-screen, #course-screen { display: none; }
+
+        /* Form Estilo GitHub */
+        .auth-box {
             border: 1px solid var(--color-border-default);
-            border-radius: 6px;
+            border-radius: 6px; padding: 32px; background: var(--color-canvas-subtle);
+            max-width: 400px; margin: 100px auto;
         }
 
-        h1, h2, h3 { font-weight: 600; margin-top: 24px; margin-bottom: 16px; }
-        h1 { font-size: 2em; border-bottom: 1px solid var(--color-border-default); padding-bottom: 8px; }
-        h2 { font-size: 1.5em; border-bottom: 1px solid var(--color-border-default); padding-bottom: 8px; margin-top: 40px; }
+        input {
+            width: 100%; padding: 8px 12px; margin: 8px 0 16px;
+            border: 1px solid var(--color-border-default); border-radius: 6px;
+            box-sizing: border-box; font-size: 14px;
+        }
+
+        button {
+            width: 100%; padding: 10px; border-radius: 6px; border: 1px solid rgba(27,31,36,0.15);
+            font-weight: 600; cursor: pointer; margin-bottom: 10px;
+        }
+
+        .btn-primary { background: var(--color-btn-primary-bg); color: white; }
+        .btn-primary:hover { background: var(--color-btn-primary-hover); }
         
-        a { color: var(--color-accent-fg); text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        .btn-outline { background: white; color: var(--color-accent-fg); border-color: var(--color-border-default); }
 
-        pre { background-color: var(--color-canvas-subtle); border-radius: 6px; padding: 16px; overflow: auto; font-family: var(--font-mono); font-size: 14px; }
-        code { font-family: var(--font-mono); background-color: rgba(175, 184, 193, 0.2); padding: 0.2em 0.4em; border-radius: 6px; font-size: 85%; }
-        pre code { background-color: transparent; padding: 0; }
-
-        /* Estilo para Módulos e Aulas (Expandable) */
-        details {
-            margin-bottom: 10px;
-            border: 1px solid var(--color-border-default);
-            border-radius: 6px;
-            background: #fff;
-        }
-        
-        summary {
-            font-weight: 600;
-            padding: 12px 16px;
-            cursor: pointer;
-            background-color: var(--color-canvas-subtle);
-            border-radius: 6px;
-            list-style: none; /* Remove seta padrão em alguns navegadores */
-            display: flex;
-            align-items: center;
-        }
-        
-        summary::-webkit-details-marker { display: none; }
-        summary::before {
-            content: "▶";
-            font-size: 12px;
-            color: #57606a;
-            margin-right: 10px;
-            transition: transform 0.2s;
-        }
-        details[open] > summary::before { transform: rotate(90deg); }
-        details[open] > summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: 1px solid var(--color-border-default); }
-
-        .lesson-content {
-            padding: 20px;
-            background: #fff;
-            border-bottom-left-radius: 6px;
-            border-bottom-right-radius: 6px;
-        }
-
-        .nested-details {
-            margin: 10px 0 0 20px;
-            border-left: 3px solid var(--color-border-default);
-            border-radius: 0;
-            border-top: none; border-right: none; border-bottom: none;
-        }
-        .nested-details > summary { background: transparent; padding: 8px 12px; font-weight: normal; }
-        .nested-details[open] > summary { border-bottom: none; font-weight: bold; }
-
-        .btn-primary {
-            display: block; width: fit-content; margin: 30px auto;
-            background-color: var(--color-btn-primary-bg); color: #fff;
-            padding: 10px 24px; border-radius: 6px; text-align: center; font-weight: bold;
-        }
-        .btn-primary:hover { background-color: var(--color-btn-primary-hover-bg); text-decoration: none; }
+        /* Estilo das Aulas */
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border-default); padding-bottom: 10px; margin-bottom: 20px; }
+        details { border: 1px solid var(--color-border-default); border-radius: 6px; margin-bottom: 8px; background: white; }
+        summary { padding: 12px; cursor: pointer; font-weight: 600; background: var(--color-canvas-subtle); list-style: none; }
+        .lesson-body { padding: 15px; border-top: 1px solid var(--color-border-default); font-size: 14px; }
+        pre { background: #1b1f23; color: #e1e4e8; padding: 16px; border-radius: 6px; overflow: auto; }
     </style>
 </head>
 <body>
 
-    <div class="repository-content">
-        <h1>📚 Trilha de Aprendizado Completa</h1>
-        <p>Clique nos módulos e aulas abaixo para expandir o conteúdo de estudo.</p>
-
-        <h2>🌐 Curso 1: HTML5 do Zero</h2>
-
-        <details>
-            <summary>📁 Módulo 1: Primeiros Passos no HTML</summary>
-            <div class="lesson-content">
-                
-                <details class="nested-details">
-                    <summary>📄 Aula 1: O que é HTML?</summary>
-                    <div class="lesson-content">
-                        <h3>Bem-vindo à web!</h3>
-                        <p>HTML (HyperText Markup Language) não é uma linguagem de programação, mas sim uma <strong>linguagem de marcação</strong>. Ela diz ao navegador como estruturar o conteúdo da página.</p>
-                        <p>Pense no HTML como o "esqueleto" de um site. O CSS será a pele/roupa, e o JavaScript (ou Python no back-end) será o cérebro.</p>
-                    </div>
-                </details>
-
-                <details class="nested-details">
-                    <summary>📄 Aula 2: Estrutura Básica de uma Página</summary>
-                    <div class="lesson-content">
-                        <h3>O Esqueleto HTML</h3>
-                        <p>Todo arquivo HTML começa com uma estrutura padrão. Veja abaixo:</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="pt-BR"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Minha Primeira Página&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Olá, Mundo!&lt;/h1&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-                        <ul>
-                            <li><code>&lt;!DOCTYPE html&gt;</code>: Avisa que é HTML5.</li>
-                            <li><code>&lt;head&gt;</code>: Configurações invisíveis (título, idioma).</li>
-                            <li><code>&lt;body&gt;</code>: O que o usuário realmente vê na tela.</li>
-                        </ul>
-                    </div>
-                </details>
-
+    <div class="container">
+        <div id="auth-screen">
+            <div class="auth-box">
+                <h2 style="text-align:center;">Entrar no Curso</h2>
+                <label>E-mail</label>
+                <input type="email" id="email" placeholder="seu@email.com">
+                <label>Senha</label>
+                <input type="password" id="password" placeholder="******">
+                <button class="btn-primary" id="btn-login">Entrar</button>
+                <button class="btn-outline" id="btn-signup">Criar nova conta</button>
+                <p id="auth-error" style="color:red; font-size: 12px; text-align: center;"></p>
             </div>
-        </details>
+        </div>
 
-        <details>
-            <summary>📁 Módulo 2: Textos, Links e Imagens</summary>
-            <div class="lesson-content">
-                
-                <details class="nested-details">
-                    <summary>📄 Aula 3: Títulos e Parágrafos</summary>
-                    <div class="lesson-content">
-                        <p>Usamos <code>&lt;h1&gt;</code> até <code>&lt;h6&gt;</code> para títulos (do maior para o menor importância) e <code>&lt;p&gt;</code> para parágrafos.</p>
-<pre><code>&lt;h2&gt;Notícia Principal&lt;/h2&gt;
-&lt;p&gt;Este é o texto da notícia. O HTML é muito fácil!&lt;/p&gt;</code></pre>
-                    </div>
-                </details>
+        <div id="course-screen">
+            <header>
+                <div>
+                    <strong>Curso Fullstack</strong> / <span id="user-display">carregando...</span>
+                </div>
+                <button onclick="logout()" style="width: auto; padding: 5px 10px; font-size: 12px;">Sair</button>
+            </header>
 
-                <details class="nested-details">
-                    <summary>📄 Aula 4: Links e Imagens</summary>
-                    <div class="lesson-content">
-                        <p>Para links, usamos a tag <code>&lt;a&gt;</code>. Para imagens, a tag <code>&lt;img&gt;</code> (que não tem fechamento).</p>
-<pre><code>&lt;!-- Link --&gt;
-&lt;a href="https://github.com"&gt;Acessar o GitHub&lt;/a&gt;
-
-&lt;!-- Imagem --&gt;
-&lt;img src="foto.jpg" alt="Descrição da foto"&gt;</code></pre>
-                    </div>
-                </details>
-
-            </div>
-        </details>
-
-
-        <h2>🐍 Curso 2: Lógica e Python</h2>
-
-        <details>
-            <summary>📁 Módulo 1: Introdução ao Python</summary>
-            <div class="lesson-content">
-                
-                <details class="nested-details">
-                    <summary>📄 Aula 1: Hello World e Variáveis</summary>
-                    <div class="lesson-content">
-                        <h3>Seu primeiro código em Python</h3>
-                        <p>O Python é famoso por ser fácil de ler. Para mostrar algo na tela, usamos a função <code>print()</code>.</p>
-<pre><code>print("Olá, Mundo!")
-
-# Criando variáveis
-nome = "Maria"
-idade = 25
-print(f"Meu nome é {nome} e tenho {idade} anos.")</code></pre>
-                    </div>
-                </details>
-
-                <details class="nested-details">
-                    <summary>📄 Aula 2: Tipos de Dados e Matemática</summary>
-                    <div class="lesson-content">
-                        <p>O Python entende textos (Strings), números inteiros (Int) e decimais (Float).</p>
-<pre><code>preco = 19.99  # Float
-quantidade = 3 # Int
-total = preco * quantidade
-print("Total a pagar:", total)</code></pre>
-                    </div>
-                </details>
-
-            </div>
-        </details>
-
-        <details>
-            <summary>📁 Módulo 2: Estruturas de Controle</summary>
-            <div class="lesson-content">
-                
-                <details class="nested-details">
-                    <summary>📄 Aula 3: Condições (IF / ELSE)</summary>
-                    <div class="lesson-content">
-                        <p>Usamos o <code>if</code> para tomar decisões no código.</p>
-<pre><code>nota = 7.5
-
-if nota >= 7.0:
-    print("Aprovado!")
-elif nota >= 5.0:
-    print("Recuperação.")
-else:
-    print("Reprovado.")</code></pre>
-                    </div>
-                </details>
-
-                <details class="nested-details">
-                    <summary>📄 Aula 4: Laços de Repetição (FOR)</summary>
-                    <div class="lesson-content">
-                        <p>O <code>for</code> serve para repetir uma ação várias vezes.</p>
-<pre><code># Vai contar de 0 até 4
-for numero in range(5):
-    print("Contagem:", numero)</code></pre>
-                    </div>
-                </details>
-
-            </div>
-        </details>
-
-
-        <h2>🚀 Projeto Final: Juntando Tudo</h2>
-
-        <details>
-            <summary>📁 Módulo 1: Criando um Servidor Web</summary>
-            <div class="lesson-content">
-                
-                <details class="nested-details">
-                    <summary>📄 Aula 1: Introdução ao Flask</summary>
-                    <div class="lesson-content">
-                        <p>Agora vamos usar Python para criar um site de verdade usando o micro-framework Flask. Primeiro, instale no terminal: <code>pip install flask</code></p>
-<pre><code>from flask import Flask
-
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "&lt;h1&gt;Meu site feito em Python!&lt;/h1&gt;"
-
-app.run()</code></pre>
-                    </div>
-                </details>
-
-                <details class="nested-details">
-                    <summary>📄 Aula 2: Entregando seu arquivo HTML</summary>
-                    <div class="lesson-content">
-                        <p>Em vez de escrever HTML dentro do Python, usamos o <code>render_template</code> para carregar aquele arquivo HTML que criamos no Curso 1!</p>
-<pre><code>from flask import Flask, render_template
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    # Isso vai ler o arquivo index.html da pasta 'templates'
-    return render_template("index.html")
-
-app.run()</code></pre>
-                    </div>
-                </details>
-
-            </div>
-        </details>
-
-        <br>
-        <a href="#" class="btn-primary" onclick="alert('Parabéns! Você concluiu a leitura da trilha.')">Concluir Curso e Emitir Certificado</a>
-
+            <h1>🚀 Sua Jornada: 50 Aulas</h1>
+            <div id="lesson-list"></div>
+        </div>
     </div>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Sua Configuração fornecida
+        const firebaseConfig = {
+            apiKey: "AIzaSyC08uBaH3okS0pdOkMM9wWS2c_sTt6_UTU",
+            authDomain: "bloco-de-notas-85103.firebaseapp.com",
+            projectId: "bloco-de-notas-85103",
+            storageBucket: "bloco-de-notas-85103.firebasestorage.app",
+            messagingSenderId: "890697512853",
+            appId: "1:890697512853:web:7bff196880f1b010d5289c",
+            measurementId: "G-SKDH1JR99T"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // --- CONTROLE DE INTERFACE ---
+        const authScreen = document.getElementById('auth-screen');
+        const courseScreen = document.getElementById('course-screen');
+        const errorMsg = document.getElementById('auth-error');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authScreen.style.display = 'none';
+                courseScreen.style.display = 'block';
+                document.getElementById('user-display').innerText = user.email;
+                renderLessons();
+            } else {
+                authScreen.style.display = 'block';
+                courseScreen.style.display = 'none';
+            }
+        });
+
+        // --- LOGIN E CADASTRO ---
+        document.getElementById('btn-login').onclick = () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, email, password).catch(e => errorMsg.innerText = "Erro ao entrar: " + e.message);
+        };
+
+        document.getElementById('btn-signup').onclick = () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            createUserWithEmailAndPassword(auth, email, password).catch(e => errorMsg.innerText = "Erro ao criar: " + e.message);
+        };
+
+        window.logout = () => signOut(auth);
+
+        // --- RENDERIZAR AS 50 AULAS ---
+        function renderLessons() {
+            const list = document.getElementById('lesson-list');
+            if(list.innerHTML !== "") return; // Evita duplicar ao relogar
+
+            const aulas = [
+                // HTML (1-15)
+                "Intro: O que é Web?", "Setup VS Code", "Primeira Tag", "Títulos H1-H6", "Parágrafos", 
+                "Listas UL/OL", "Links href", "Imagens e Alt", "Atributos Globais", "Tabelas", 
+                "Divs e Spans", "ID vs Class", "Formulários", "Inputs de Texto", "Checkbox e Radio",
+                // CSS (16-25)
+                "Intro CSS", "Cores HEX/RGB", "Box Model", "Padding/Margin", "Bordas", 
+                "Fontes Google", "Flexbox Row", "Flexbox Column", "Responsividade", "Hover Effects",
+                // PYTHON (26-40)
+                "Setup Python", "Variáveis", "Inteiros e Floats", "Strings", "Listas em Python", 
+                "Dicionários", "Input do Usuário", "Operadores Lógicos", "IF e ELSE", "Loop FOR", 
+                "Loop WHILE", "Funções def", "Parâmetros", "Retorno de Dados", "Importando Módulos",
+                // BACKEND (41-50)
+                "O que é Flask?", "Minha primeira rota", "Render Template", "Variáveis no HTML", "Método POST", 
+                "Banco de Dados SQL", "Login com Flask", "API JSON", "Deploy Python", "Conclusão do Curso"
+            ];
+
+            aulas.forEach((aula, i) => {
+                const html = `
+                    <details>
+                        <summary>Aula ${i + 1}: ${aula}</summary>
+                        <div class="lesson-body">
+                            <p>Conteúdo prático sobre <strong>${aula}</strong>.</p>
+                            <p>Exemplo de código para estudo:</p>
+                            <pre><code>${i < 25 ? '\n<div class="aula">Aprenda ' + aula + '</div>' : '# Exemplo Python\ndef aula():\n    print("Estudando ' + aula + '")'}</code></pre>
+                        </div>
+                    </details>
+                `;
+                list.innerHTML += html;
+            });
+        }
+    </script>
 </body>
 </html>
