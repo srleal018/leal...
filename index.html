@@ -2,71 +2,83 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso Fullstack: 50 Aulas</title>
+    <title>Formação Python Completa | Trilha de Conhecimento</title>
     <style>
-        :root { --border: #d0d7de; --bg: #f6f8fa; --text: #24292f; --accent: #0969da; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; }
-        h1 { border-bottom: 2px solid var(--border); padding-bottom: 10px; }
-        .lesson-card { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; padding: 12px; background: white; display: flex; align-items: center; }
-        .lesson-card input { margin-right: 15px; transform: scale(1.2); }
-        .lesson-title { font-weight: 600; cursor: pointer; flex-grow: 1; }
-        .lesson-content { display: none; padding: 15px; border-top: 1px solid var(--border); background: var(--bg); font-size: 14px; }
-        pre { background: #282c34; color: #abb2bf; padding: 10px; border-radius: 5px; overflow-x: auto; }
-        .open { display: block; }
+        :root { --bg: #f4f4f4; --header: #212121; --accent: #3776ab; --text: #333; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        header { background: var(--header); color: #fff; padding: 30px; text-align: center; border-bottom: 5px solid var(--accent); }
+        .progress-container { position: sticky; top: 0; background: white; padding: 10px; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
+        #bar { height: 8px; background: #ddd; width: 100%; border-radius: 4px; overflow: hidden; margin-top: 5px; }
+        #fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
+        .module { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 5px solid var(--accent); }
+        .lesson { border-bottom: 1px solid #eee; padding: 15px 0; display: flex; align-items: start; }
+        .lesson:last-child { border-bottom: none; }
+        input { margin-top: 5px; margin-right: 15px; cursor: pointer; }
+        code { background: #f0f0f0; padding: 2px 5px; border-radius: 4px; font-family: monospace; }
+        pre { background: #282c34; color: #abb2bf; padding: 15px; border-radius: 5px; overflow-x: auto; font-size: 0.9em; }
     </style>
 </head>
 <body>
 
-    <h1>🚀 Trilha: 50 Aulas (Python + Web)</h1>
-    <p>Marque as aulas conforme for concluindo. Seu progresso é salvo automaticamente!</p>
-    
-    <div id="lesson-container"></div>
+    <header>
+        <h1>Formação Python: Do Zero ao Profissional</h1>
+    </header>
+
+    <div class="progress-container">
+        <strong>Seu Progresso: <span id="percent">0%</span></strong>
+        <div id="bar"><div id="fill"></div></div>
+    </div>
+
+    <div class="container" id="trilha"></div>
 
     <script>
-        // Lista das aulas
-        const aulas = [
-            "O que é HTML?", "Setup VS Code", "Estrutura Boilerplate", "Headings (h1-h6)", "Parágrafos", 
-            "Formatação de Texto", "Links e Âncoras", "Imagens e Alt", "Listas UL/OL", "Tabelas Básicas", 
-            "Divs e Spans", "ID vs Class", "Formulários", "Inputs e Labels", "Botões de Submissão",
-            "Intro CSS", "Cores e Backgrounds", "Box Model", "Margem e Padding", "Bordas", 
-            "Google Fonts", "Flexbox Row", "Flexbox Col", "Responsividade", "Hover Effects",
-            "Setup Python", "Variáveis", "Inteiros e Floats", "Strings", "Listas", 
-            "Dicionários", "Input", "Operadores Lógicos", "IF e ELSE", "Loop FOR", 
-            "Loop WHILE", "Funções def", "Parâmetros", "Retorno de Dados", "Importando Módulos",
-            "Tratamento de Erros", "Classes e Objetos", "Métodos", "Decorators", "Ambientes Virtuais", 
-            "Pip e Instalação", "Flask: App Básico", "Flask: Rotas", "Flask: Templates", "Projeto Final"
+        const cursos = [
+            { mod: "Módulo 1: Fundamentos", aulas: ["Setup e Ambiente", "Hello World", "Variáveis", "Tipos de Dados", "Entrada e Saída", "Operadores Matemáticos", "Strings", "Formatação f-strings", "Conversão de tipos", "Desafio Inicial"] },
+            { mod: "Módulo 2: Controle e Estrutura", aulas: ["If, Elif, Else", "Operadores Lógicos", "Listas (List)", "Métodos de Lista", "Dicionários (Dict)", "Tuplas", "Conjuntos (Sets)", "Loop FOR", "Loop WHILE", "Controle de Fluxo (Break/Continue)"] },
+            { mod: "Módulo 3: Modularização", aulas: ["Definição de Funções", "Parâmetros e Argumentos", "Retorno (Return)", "Escopo de Variáveis", "Módulos Padrão", "Criando Módulos", "Packages", "Tratamento de Erros (Try/Except)", "Exceptions customizadas", "Docstrings"] },
+            { mod: "Módulo 4: Orientação a Objetos (POO)", aulas: ["O que é POO", "Classes e Objetos", "Método Construtor (__init__)", "Atributos", "Métodos", "Encapsulamento", "Herança", "Polimorfismo", "Decorators", "Abstração"] },
+            { mod: "Módulo 5: Profissionalização", aulas: ["Manipulação de Arquivos (TXT/CSV)", "Ambientes Virtuais (venv)", "Gerenciamento com Pip", "Introdução ao Git", "Debugando Código", "Bibliotecas Externas (Requests)", "Data e Hora", "JSON", "Introdução ao Backend (Flask)", "Projeto Final: Sistema Completo"] }
         ];
 
-        const container = document.getElementById('lesson-container');
+        const trilhaDiv = document.getElementById('trilha');
 
-        aulas.forEach((titulo, i) => {
-            const id = `aula-${i}`;
-            const isChecked = localStorage.getItem(id) === 'true';
-
-            const div = document.createElement('div');
-            div.innerHTML = `
-                <div class="lesson-card">
-                    <input type="checkbox" id="check-${i}" ${isChecked ? 'checked' : ''} onchange="toggleCheck('${id}')">
-                    <span class="lesson-title" onclick="toggleContent('content-${i}')">Aula ${i + 1}: ${titulo}</span>
-                </div>
-                <div id="content-${i}" class="lesson-content">
-                    <p>Conteúdo de estudo para: <strong>${titulo}</strong></p>
-                    <pre><code># Exemplo de código da aula ${i + 1}\nprint("Estudando ${titulo}")</code></pre>
-                </div>
-            `;
-            container.appendChild(div);
+        cursos.forEach((m, mIdx) => {
+            const section = document.createElement('div');
+            section.className = 'module';
+            section.innerHTML = `<h2>${m.mod}</h2>`;
+            
+            m.aulas.forEach((aula, aIdx) => {
+                const id = `m${mIdx}a${aIdx}`;
+                const isChecked = localStorage.getItem(id) === 'true';
+                
+                const div = document.createElement('div');
+                div.className = 'lesson';
+                div.innerHTML = `
+                    <input type="checkbox" id="${id}" ${isChecked ? 'checked' : ''} onchange="save()">
+                    <div>
+                        <strong>Aula ${aIdx + 1}: ${aula}</strong>
+                        <p>Aprenda a fundamentação técnica sobre ${aula.toLowerCase()}.</p>
+                        <pre># Exemplo prático: ${aula}\nprint("Estudando ${aula}")</pre>
+                    </div>
+                `;
+                section.appendChild(div);
+            });
+            trilhaDiv.appendChild(section);
         });
 
-        // Funções de controle
-        function toggleContent(id) {
-            document.getElementById(id).classList.toggle('open');
+        function save() {
+            const total = document.querySelectorAll('input').length;
+            let checked = 0;
+            document.querySelectorAll('input').forEach(chk => {
+                localStorage.setItem(chk.id, chk.checked);
+                if(chk.checked) checked++;
+            });
+            const pct = Math.round((checked / total) * 100);
+            document.getElementById('fill').style.width = pct + '%';
+            document.getElementById('percent').innerText = pct + '%';
         }
-
-        function toggleCheck(id) {
-            const checked = document.getElementById(`check-${id.split('-')[1]}`).checked;
-            localStorage.setItem(id, checked);
-        }
+        save(); // Inicializa
     </script>
 </body>
 </html>
